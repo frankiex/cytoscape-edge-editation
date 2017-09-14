@@ -143,7 +143,7 @@
 
             this._$container.on('mouseover', function(e){
                 if(this._hover) {
-                    this._mouseOver({cyTarget: this._hover});
+                    this._mouseOver({target: this._hover});
                 }
             }.bind(this));
 
@@ -215,7 +215,7 @@
 
         },
         _showHandles: function(target){
-            var nodeTypeName = target.data().type;
+            var nodeTypeName = target.data('type');
             if(nodeTypeName){
 
                 var handles = this._handles[nodeTypeName]?this._handles[nodeTypeName]:this._handles["*"];
@@ -235,7 +235,6 @@
             this._ctx.clearRect( 0, 0, w, h );
         },
         _drawHandle: function(handle, target){
-
             var position = this._getHandlePosition(handle, target);
 
             this._ctx.beginPath();
@@ -342,11 +341,11 @@
         _mouseOver: function (e) {
 
             if (this._dragging) {
-                if (e.cyTarget.id() != this._dragging.id() || this._hit.handle.allowLoop) {
-                    this._hover = e.cyTarget;
+                if (e.target.id() != this._dragging.id() || this._hit.handle.allowLoop) {
+                    this._hover = e.target;
                 }
             } else {
-                this._hover = e.cyTarget;
+                this._hover = e.target;
                 this._showHandles(this._hover);
             }
         },
@@ -371,7 +370,7 @@
             var mousePoisition = this._getRelativePosition(e);
 
             if(this._hover){
-                var nodeTypeName = this._hover.data().type;
+                var nodeTypeName = this._hover.data('type');
                 if(nodeTypeName) {
                     var handles = this._handles[nodeTypeName]?this._handles[nodeTypeName]:this._handles["*"];
 
@@ -379,6 +378,7 @@
                         var handle = handles[i];
 
                         var position = this._getHandlePosition(handle, this._hover);
+                        mousePoisition.x -= 17;
                         if(VectorMath.distance(position, mousePoisition) < this.HANDLE_SIZE){
                             return {
                                 handle: handle,
@@ -463,7 +463,7 @@
                 var edges = this._cy.edges("[source='"+node.id()+"']");
 
                 for(var i = 0; i < edges.length; i++ ){
-                    if(edges[i].data()["type"] == handle.type){
+                    if(edges[i].data('type') == handle.type){
                         return edges[i];
                     }
                 }
