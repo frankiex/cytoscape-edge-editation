@@ -6,8 +6,8 @@ Extension for Cytoscape.js, which adds handles to nodes and allows to create dif
 
 Extension was tested with these versions of libraries:
 
-* jQuery 2.1.1
-* Cytoscape.js 2.6.0
+* jQuery 2.2.3
+* Cytoscape.js 3.2.2
 
 ## Install
 
@@ -15,7 +15,7 @@ Use git clone or direct zip download and unpack archive into your project. Then,
 Cytoscape.js and jQuery:
 
 ```html
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script src="cytoscape.js"></script>
 <script src="CytoscapeEdgeEditation.js"></script>
 ```
