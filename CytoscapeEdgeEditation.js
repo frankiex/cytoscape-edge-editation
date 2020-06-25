@@ -143,7 +143,7 @@
 
             this._$container.on('mouseover', function(e){
                 if(this._hover) {
-                    this._mouseOver({cyTarget: this._hover});
+                    this._mouseOver({target: this._hover});
                 }
             }.bind(this));
 
@@ -190,7 +190,8 @@
                 group: "nodes",
                 data: {
                     "id": this.ARROW_END_ID,
-                    "position": {x: 150,y:150}
+                    "position": {x: 150,y:150},
+					"name": "arrow"
                 }
             });
 
@@ -215,18 +216,19 @@
 
         },
         _showHandles: function(target){
-            var nodeTypeName = target.data().type;
-            if(nodeTypeName){
-
-                var handles = this._handles[nodeTypeName]?this._handles[nodeTypeName]:this._handles["*"];
-
-                for(var i in handles){
-                    if(handles[i].type != null){
-                        this._drawHandle(handles[i], target);
-                    }
-                }
-            }
-
+			if(target) {
+	            var nodeTypeName = target.data().type;
+	            if(nodeTypeName){
+	
+	                var handles = this._handles[nodeTypeName]?this._handles[nodeTypeName]:this._handles["*"];
+	
+	                for(var i in handles){
+	                    if(handles[i].type != null){
+	                        this._drawHandle(handles[i], target);
+	                    }
+	                }
+	            }
+			}
         },
         _clear: function(){
 
@@ -340,13 +342,12 @@
             }
         },
         _mouseOver: function (e) {
-
             if (this._dragging) {
-                if (e.cyTarget.id() != this._dragging.id() || this._hit.handle.allowLoop) {
-                    this._hover = e.cyTarget;
+                if (e.target.id() != this._dragging.id() || this._hit.handle.allowLoop) {		// in v3.0.0 e.cyTarget has been renamed to e.target - cf: https://blog.js.cytoscape.org/2017/04/11/3.0.0-release/
+                    this._hover = this._cy.getElementById(e.target._private.data.id);	// in v3.0.0 e.cyTarget has been renamed to e.target - cf: https://blog.js.cytoscape.org/2017/04/11/3.0.0-release/
                 }
             } else {
-                this._hover = e.cyTarget;
+                this._hover = this._cy.getElementById(e.target._private.data.id);	// in v3.0.0 e.cyTarget has been renamed to e.target - cf: https://blog.js.cytoscape.org/2017/04/11/3.0.0-release/
                 this._showHandles(this._hover);
             }
         },
